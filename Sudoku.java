@@ -20,16 +20,21 @@ public class Sudoku {
 	private void delExistingNumRowColumnNinebyNine(int existingNum,int rowIndex,int columnIndex) {
 		for(int k=0;k<9;k++) {
 			if(k!=(existingNum-1)) {
+				//write small desscription of what is happending here
 				m[rowIndex][columnIndex][k]=false;
 			}
-			if(k!=columnIndex) {
+			if(k!=columnIndex) {				
+				//write small desscription of what is happending here
 				m[rowIndex][k][existingNum-1]=false;
 			}
 			if(k!=rowIndex) {
+				//write small desscription of what is happending here
 				m[k][columnIndex][existingNum-1]=false;
 			}
+			//?? what about diagnal
 		}
 	}
+				//write small desscription of what is happending here
 	private void delExistingNumRowColumnNinebyNine() {
 		for(int i=0;i<9;i++) {
 			for(int j=0;j<9;j++) {
@@ -40,6 +45,7 @@ public class Sudoku {
 			}
 		}
 	}
+	//this one is good all variables are correctly named 
 	public void delExistingNumRowColumnThreeByThree(int rowIndex,int columnIndex,int existingNum) {
 		for(int x=rowIndex;x<rowIndex+3;x++) {
 			for(int y=columnIndex;y<columnIndex+3;y++) {
@@ -51,7 +57,9 @@ public class Sudoku {
 			}
 		}
 	}
+	//maybe rename to cleanUpThreeByThreeBlocksOfRepeats
 	public void delExistingNumRowColumnThreeByThree() {
+		//dont reuse variables create new variables in each function
 		e=0;
 		f=0;
 		while(f<7) {
@@ -70,7 +78,10 @@ public class Sudoku {
 			f=f+3;
 		}
 	}
+	//fix tabs too many tabs here
+	//maybe change the name to updateMatrixContainingSingleNum
 	public void checkEachBlockContainSingleNum() {
+		//functions should use their own temp variables
 		count=0;
 		for(int i=0;i<9;i++) {
 			for(int j=0;j<9;j++) {
@@ -231,12 +242,15 @@ public class Sudoku {
         c=-1;
         return c;
 	}
+	//write explanation of what this method does here
 	public void repeatMethodsEmptyBlock() {
-	
+	//describe why this needs tobe done in this order
 		int[][] mt=new int[9][9];
 		delExistingNumRowColumnNinebyNine();
 		delExistingNumRowColumnThreeByThree();
 		checkEachBlockContainSingleNum();
+		//if delExistingNumRowColumnNinebyNine & delExistingNumRowColumnThreeByThree are done one after another then just move this to another method which calls both of them
+		//so that there is only one line in this method like updateBooleanMatrix which can call delExistingNumRowColumnNinebyNine & delExistingNumRowColumnThreeByThree
 		delExistingNumRowColumnNinebyNine();
 		delExistingNumRowColumnThreeByThree();
 		checkOnePossibilityEachNumThreeByThree();
