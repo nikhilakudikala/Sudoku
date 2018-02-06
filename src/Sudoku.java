@@ -17,8 +17,7 @@ public class Sudoku {
 		matrix=newMatrix;
 		m=booleanMatrix;
 	}
-	//comment
-	private void delExistingNumRowColumnNinebyNine(int existingNum,int rowIndex,int columnIndex) {
+	private void updateBooleanMatrixNinebyNine(int existingNum,int rowIndex,int columnIndex) {
 		for(int k=0;k<9;k++) {
 			if(k!=(existingNum-1)) {
 				m[rowIndex][columnIndex][k]=false;
@@ -31,12 +30,12 @@ public class Sudoku {
 			}
 		}
 	}
-	private void delExistingNumRowColumnNinebyNine() {
+	private void checkAvailableNumberMatrix() {
 		for(int i=0;i<9;i++) {
 			for(int j=0;j<9;j++) {
 				block=matrix[i][j];
 				if(block!=empty) {
-					delExistingNumRowColumnNinebyNine(block,i,j);
+					updateBooleanMatrixNinebyNine(block,i,j);
 				}
 			}
 		}
@@ -53,31 +52,31 @@ public class Sudoku {
 		}
 	}
 	public void delExistingNumRowColumnThreeByThree() {
-		e=0;
-		f=0;
-		while(f<7) {
-			while(e<7) {
-				for(int i=e;i<e+3;i++) {
-					for(int j=f;j<f+3;j++) {
-						block=matrix[i][j];
+		int rowIndex=0;
+		int columnIndex=0;
+		while(columnIndex<7) {
+			while(rowIndex<7) {
+				for(int i=rowIndex;i<rowIndex+3;i++) {
+					for(int j=columnIndex;j<columnIndex+3;j++) {
+						int block=matrix[i][j];
 						if(block!=empty) {
-							delExistingNumRowColumnThreeByThree(e,f,block);
+							delExistingNumRowColumnThreeByThree(rowIndex,columnIndex,block);
 						}
 					}
 				}
-				e=e+3;
+				rowIndex=rowIndex+3;
 			}
-			e=0;
-			f=f+3;
+			rowIndex=0;
+			columnIndex=columnIndex+3;
 		}
 	}
 	public void checkEachBlockContainSingleNum() {
-		count=0;
+		int count=0;
 		for(int i=0;i<9;i++) {
 			for(int j=0;j<9;j++) {
 				for(int k=0;k<9;k++) {
 						if(m[i][j][k]==true) {
-							block=k+1;
+							int block=k+1;
 							count=count+1;
 						}
 						if(count>2) {
@@ -93,34 +92,37 @@ public class Sudoku {
 			}
 	}
 	public void checkOnePossibilityEachNumThreeByThree() {
-		e=0;
-		f=0;
-		count=0;
-		while(f<7) {
-			while(e<7) {
-			    while(number<10) {
-			    	for(int i=e;i<e+3;i++) {
-						for(int j=f;j<f+3;j++) {
+		int rowIndex=0;
+		int columnIndex=0;
+		int count=0;
+		int number=1;
+		int currentRowIndex=0;
+		int currentColumnIndex=0;
+		while(columnIndex<7) {
+			while(rowIndex<7) {
+			    while(columnIndex<10) {
+			    	for(int i=rowIndex;i<rowIndex+3;i++) {
+						for(int j=columnIndex;j<columnIndex+3;j++) {
 							if(m[i][j][number-1]==true) {
 								count=count+1;
-								p=i;q=j;
+								currentRowIndex=i;currentColumnIndex=j;
 							}
 						}
 					}
 					if(count==1) {
-						matrix[p][q]=number;
+						matrix[currentRowIndex][currentColumnIndex]=number;
 					}
-					p=0;
-					q=0;
+					currentRowIndex=0;
+					currentColumnIndex=0;
 					count=0;
 					number++;
 			    }
 			    number=1;
-				e=e+3;
+			    rowIndex=rowIndex+3;
 			}
 			number=1;
-			e=0;
-			f=f+3;
+			rowIndex=0;
+			columnIndex=columnIndex+3;
 		}
 	}
 	public void delExistingNumRowColumnFoundTwiceThreebyThree(int blockNumber,int previousRowIndex,int previousColumnIndex,int currentRowIndex,int currentColumnIndex) {
@@ -235,7 +237,7 @@ public class Sudoku {
 	public void repeatMethodsEmptyBlock() {
 	
 		int[][] mt=new int[9][9];
-		delExistingNumRowColumnNinebyNine();
+		updateBooleanMatrixNinebyNine();
 		delExistingNumRowColumnThreeByThree();
 		checkEachBlockContainSingleNum();
 		delExistingNumRowColumnNinebyNine();
