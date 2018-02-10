@@ -218,7 +218,7 @@ public class Sudoku {
 		checkAvailableMatrixNumberNineByNine();
 		checkAvailableMatrixNumberThreeByThree();
 	}
-	public int getMatrix(int c) {
+	public int getMatrix() {
 		String lineSplit = "";
         StringJoiner sk = new StringJoiner("+", "|", "|");
         for (int i=0; i< matrix[0].length; i++) {
@@ -234,11 +234,11 @@ public class Sudoku {
             System.out.println(sj.toString());
         }
         System.out.println(lineSplit);
-        c=-1;
+        int c=-1;
         return c;
 	}
-	public void repeatMethodsEmptyBlock() {
-	
+	public int repeatMethodsEmptyBlock() {
+		int count=0;
 		int[][] mt=new int[9][9];
 		checkAvailableMatrixNumber();
 		checkEachBlockContainSingleNum();
@@ -247,20 +247,19 @@ public class Sudoku {
 		checkAvailableMatrixNumber();
 		checkBooleanMatrixNumFoundTwiceThreebyThree();
 		checkAvailableMatrixNumber();
-		int count=checkNumEmptyBlocks();
+		count=checkNumEmptyBlocks();
 		while(count>0) {
 			if(mt==returnMatrix(matrix)) {
 				System.out.println("The Game has multiple solutions!");
 				break;
 			}
 			mt=matrix;
-			repeatMethodsEmptyBlock();
-			
+			count=repeatMethodsEmptyBlock();
 		}
 		if(count==0) {
-			count=getMatrix(count);
+			count=getMatrix();
 		}
-		
+		return count;
 	}
 	public static void main(String[] args) {
 		boolean[][][] m=new boolean[9][9][9];
