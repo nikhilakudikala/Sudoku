@@ -25,7 +25,7 @@ public class Sudoku {
 			}
 		}
 	}
-	private void checkAvailableMatrixNumberNineByNine() {
+	private boolean[][][] checkAvailableMatrixNumberNineByNine() {
 		int block=0;
 		for(int i=0;i<9;i++) {
 			for(int j=0;j<9;j++) {
@@ -35,6 +35,7 @@ public class Sudoku {
 				}
 			}
 		}
+return m;
 	}
 	public void updateBooleanMatrixThreeByThree(int rowIndex,int columnIndex,int comparableRowIndex,int comparableColumnIndex,int blockNum) {
 		for(int x=rowIndex;x<rowIndex+3;x++) {
@@ -248,7 +249,7 @@ public class Sudoku {
 		checkBooleanMatrixNumFoundTwiceThreebyThree();
 		checkAvailableMatrixNumber();
 		int count=checkNumEmptyBlocks();
-		while(count>0) {
+		while(checkNumEmptyBlocks()>0) {
 			if(mt==returnMatrix(matrix)) {
 				System.out.println("The Game has multiple solutions!");
 				break;
@@ -260,7 +261,7 @@ public class Sudoku {
 		if(count==0) {
 			count=getMatrix(count);
 		}
-		
+		count=0;
 	}
 	public static void main(String[] args) {
 		boolean[][][] m=new boolean[9][9][9];
@@ -281,7 +282,7 @@ public class Sudoku {
 	            {3,0,0,0,5,0,9,2,0},
 	            {9,0,6,0,4,0,0,3,0},
 	            {0,0,0,3,0,9,5,0,8}
-	            };
+		        };
 		  	
 		Sudoku sk=new Sudoku(matrixValues,m);
 		sk.repeatMethodsEmptyBlock();
